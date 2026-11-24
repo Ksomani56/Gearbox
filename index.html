@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Gearbox</title>
+<meta name="theme-color" content="#eceef0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Gearbox">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+:root{--bg:#eceef0;--sf:rgba(255,255,255,.66);--sfs:#fff;--ink:#101215;--mu:#666b72;--ln:rgba(16,18,21,.09);--ac:#16191d;--acs:rgba(16,18,21,.06);--red:#d9363e;--hole:#a7adb4;--gb:rgba(255,255,255,.7);--sh:0 10px 34px rgba(20,25,30,.10);--w1:rgba(255,255,255,.95);--w2:rgba(185,193,204,.55);--w3:rgba(165,172,182,.4);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0c0d0f;--sf:rgba(34,37,42,.6);--sfs:#1b1d21;--ink:#f1f2f3;--mu:#9aa0a7;--ln:rgba(255,255,255,.09);--ac:#e9ecef;--acs:rgba(255,255,255,.08);--red:#ff6b72;--hole:#4a4f56;--gb:rgba(255,255,255,.08);--sh:0 10px 34px rgba(0,0,0,.4);--w1:rgba(70,76,86,.5);--w2:rgba(50,55,64,.5);--w3:rgba(60,64,72,.4)}}
+:root[data-theme="dark"]{--bg:#0c0d0f;--sf:rgba(34,37,42,.6);--sfs:#1b1d21;--ink:#f1f2f3;--mu:#9aa0a7;--ln:rgba(255,255,255,.09);--ac:#e9ecef;--acs:rgba(255,255,255,.08);--red:#ff6b72;--hole:#4a4f56;--gb:rgba(255,255,255,.08);--sh:0 10px 34px rgba(0,0,0,.4);--w1:rgba(70,76,86,.5);--w2:rgba(50,55,64,.5);--w3:rgba(60,64,72,.4)}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.45 Manrope,system-ui,-apple-system,sans-serif;padding-bottom:calc(100px + env(safe-area-inset-bottom,0px));min-height:100vh}
+body::before{content:"";position:fixed;inset:0;z-index:-1;background:radial-gradient(60% 38% at 12% 0%,var(--w1),transparent 72%),radial-gradient(50% 34% at 100% 18%,var(--w2),transparent 72%),radial-gradient(60% 40% at 55% 100%,var(--w3),transparent 72%)}
+.gl,.tile,.case,#q,nav,dialog,#vb{background:var(--sf);-webkit-backdrop-filter:blur(22px) saturate(1.5);backdrop-filter:blur(22px) saturate(1.5);border:1px solid var(--gb);box-shadow:var(--sh)}
+header{max-width:640px;margin:0 auto;padding:18px 16px 4px;display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:10px;font-size:25px;font-weight:800;letter-spacing:-.04em;line-height:1}
+#vb{width:44px;height:44px;border-radius:50%;color:var(--ink);display:flex;align-items:center;justify-content:center;padding:0}
+#q{display:block;width:calc(100% - 32px);max-width:608px;margin:10px auto 0;padding:13px 16px;border-radius:16px;color:var(--ink);font:inherit;box-shadow:none}
+main{max-width:640px;margin:0 auto;padding:10px 16px}
+h2{font-size:26px;font-weight:800;letter-spacing:-.03em;margin:2px 0 6px;line-height:1.12}
+.mu{color:var(--mu);font-size:14px}
+.nx{background:linear-gradient(140deg,#2b3036,#0f1215);color:#fff;border-radius:24px;padding:20px;margin:10px 0 14px;box-shadow:0 14px 34px rgba(10,14,18,.3);border:1px solid rgba(255,255,255,.1)}
+.nx .mu{color:rgba(255,255,255,.78)}.nx .btn{margin-bottom:0;background:#fff;color:#111418}
+.sec{font-weight:700;font-size:15px;margin:22px 0 6px}
+.al{display:flex;gap:12px;align-items:center;padding:14px 0;border-bottom:1px solid var(--ln)}
+.al::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--ac);flex:none}
+.ok{padding:13px 0;color:var(--mu)}
+.mf{display:flex;align-items:baseline;gap:8px;padding:8px 0}.mf i{flex:1;border-bottom:1.5px dotted var(--ln)}.mf b{font-size:18px;font-variant-numeric:tabular-nums}
+.sw{display:flex;gap:4px;background:var(--acs);border-radius:14px;padding:4px;margin:6px 0 14px}
+.sw button{flex:1;border:0;background:none;padding:10px 6px;border-radius:11px;font:inherit;font-weight:700;color:var(--mu)}
+.sw button.a{background:var(--sfs);color:var(--ink);box-shadow:0 2px 10px rgba(0,0,0,.08)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tile{position:relative;border-radius:20px;overflow:hidden}
+.tp{display:block;width:100%;aspect-ratio:1;object-fit:cover}
+.ph{display:flex;align-items:center;justify-content:center;background:var(--acs);color:var(--ac);font-size:46px;font-weight:800}
+.tn{padding:10px 12px 12px}.tn b{display:block;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.tn span{font-size:13px;color:var(--mu)}
+.chip{position:absolute;top:10px;left:10px;font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;background:var(--ac);color:var(--bg)}
+.chip.missing,.chip.no{background:var(--red);color:#fff}.chip.yes{background:var(--sfs);color:var(--ink)}
+.rowc{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--ln)}.rowc .t{flex:1;min-width:0}.rowc b{display:block;font-weight:700}
+.strip{display:flex}.strip img,.strip div{width:38px;height:38px;border-radius:12px;object-fit:cover;border:2px solid var(--bg);margin-left:-12px;background:var(--acs)}.strip :first-child{margin-left:0}
+.btn{display:block;width:100%;padding:16px;border:0;border-radius:16px;background:var(--ac);color:var(--bg);font:inherit;font-weight:700;margin:10px 0;box-shadow:0 8px 20px rgba(0,0,0,.16)}
+.btn.g{background:var(--sf);color:var(--ink);border:1px solid var(--gb);box-shadow:none}
+.empty{text-align:center;color:var(--mu);padding:36px 8px}
+.note{font-size:14px;color:var(--mu);margin:0 0 8px}.ln{text-decoration:underline;color:var(--ink);font-weight:600}
+.bk{background:none;border:0;font:inherit;font-weight:700;padding:6px 0;color:var(--ac)}
+.case{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;border-radius:24px;padding:12px;margin:10px 0}
+.slot{position:relative;aspect-ratio:1;border-radius:14px;overflow:hidden;display:flex;align-items:flex-end;color:#fff}
+.slot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.slot .sn{position:relative;width:100%;padding:16px 7px 6px;font-size:12px;font-weight:700;line-height:1.15;background:linear-gradient(transparent,rgba(8,16,30,.72));overflow:hidden;max-height:100%}
+.slot.in,.slot.half{background:linear-gradient(140deg,#3b4148,#15181c);border:1px solid rgba(255,255,255,.12)}
+.slot.out{border:2px dashed var(--hole);color:var(--mu);align-items:center;justify-content:center;text-align:center;padding:4px}
+.slot.out .sn{background:none;padding:0}
+.slot .sq{position:absolute;top:6px;right:6px;background:#fff;color:#111418;font-size:12px;font-weight:800;padding:1px 7px;border-radius:999px}
+.slot.in::after{content:"";position:absolute;top:7px;right:7px;width:11px;height:11px;border-radius:50%;background:#fff;box-shadow:0 0 0 3px rgba(255,255,255,.22)}
+.slot.in .sq{display:none}
+.seg{display:flex;gap:3px;margin:8px 0}.seg i{flex:1;max-width:24px;min-width:3px;height:8px;border-radius:4px;background:var(--acs);border:0}
+.seg i.f{background:var(--ac)}.seg i.p{background:linear-gradient(90deg,var(--ac) 50%,var(--acs) 50%)}
+.nx .seg i{background:rgba(255,255,255,.28)}.nx .seg i.f{background:#fff}.nx .seg i.p{background:linear-gradient(90deg,#fff 50%,rgba(255,255,255,.28) 50%)}
+nav{position:fixed;left:14px;right:14px;bottom:calc(12px + env(safe-area-inset-bottom,0px));max-width:420px;margin:0 auto;display:flex;gap:4px;padding:6px;border-radius:24px}
+nav button{flex:1;padding:12px 4px;border:0;background:none;color:var(--mu);font:inherit;font-weight:700;font-size:14px;border-radius:18px}nav button{position:relative}nav button.a{color:var(--ac);background:none}
+#ni{position:absolute;top:6px;bottom:6px;left:6px;width:calc((100% - 24px)/4);border-radius:18px;background:var(--acs);transform:translateX(calc(var(--i,0)*(100% + 4px)));transition:transform .5s cubic-bezier(.3,1.3,.4,1);pointer-events:none}
+dialog{border-radius:28px 28px 0 0;color:var(--ink);width:100%;max-width:520px;margin:auto auto 0;padding:20px 16px calc(16px + env(safe-area-inset-bottom,0px));max-height:90vh;border-bottom:0;background:var(--sfs)}
+dialog::backdrop{background:rgba(10,20,40,.4);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+dialog h3{margin:0 0 2px;font-size:21px;font-weight:800;letter-spacing:-.02em}
+label{display:block;font-size:13px;color:var(--mu);margin:12px 0 4px;font-weight:600}
+dialog input:not([type=checkbox]),dialog select,dialog textarea{width:100%;padding:13px;border:1px solid var(--ln);border-radius:14px;background:var(--acs);color:var(--ink);font:inherit}
+.r2{display:flex;gap:10px}.r2>*{flex:1;min-width:0}
+.pk{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid var(--ln);margin:0;color:var(--ink);font-size:16px}.pk input{width:22px;height:22px;accent-color:var(--ac)}
+.gh{display:flex;justify-content:space-between;margin:12px 0 2px;font-weight:700;font-size:14px;color:var(--ac)}.gh span{padding:2px 6px;text-decoration:underline}
+#pv{width:100%;max-height:170px;object-fit:cover;border-radius:14px;margin-top:8px;display:none}
+.vr{display:flex;gap:8px}#v_p{margin-top:10px}#v_p div{padding:3px 0}
+.kin{width:100%;margin-top:10px;padding:13px;border:1px solid var(--ln);border-radius:14px;background:var(--acs);color:var(--ink);font:inherit}
+.warn{border-left:3px solid var(--ac);padding:4px 12px;margin:8px 0}
+
+button,.tile,.slot,.rowc,.al,.btn{transition:transform .2s cubic-bezier(.2,.8,.2,1),background-color .25s ease,color .25s ease,box-shadow .25s ease,opacity .2s ease,border-color .25s ease}
+.btn:active,.tile:active,.slot:active,#vb:active,nav button:active,.sw button:active{transform:scale(.95)}
+.rowc:active,.al:active{opacity:.55}
+.seg i{transition:background .35s ease}
+@keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+main.enter>*{animation:rise .4s cubic-bezier(.2,.8,.2,1) both}
+main.enter>*:nth-child(2){animation-delay:.05s}main.enter>*:nth-child(3){animation-delay:.1s}main.enter>*:nth-child(4){animation-delay:.15s}main.enter>*:nth-child(5){animation-delay:.2s}main.enter>*:nth-child(n+6){animation-delay:.25s}
+@keyframes pop{0%{transform:scale(.86)}55%{transform:scale(1.06)}100%{transform:scale(1)}}
+.slot.pop{animation:pop .34s cubic-bezier(.2,.8,.2,1)}
+@keyframes sheet{from{transform:translateY(48px);opacity:0}to{transform:none;opacity:1}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+dialog[open]{animation:sheet .36s cubic-bezier(.2,.8,.2,1)}dialog[open]::backdrop{animation:fade .3s ease}
+@media (prefers-reduced-motion:reduce){*,*::before{animation:none!important;transition:none!important}}
+</style></head><body>
+<header><div class="brand"><svg viewBox="0 0 32 32" width="32" height="32"><rect width="32" height="32" rx="10" fill="currentColor"/><rect x="7" y="11" width="18" height="12" rx="3" fill="none" style="stroke:var(--bg)" stroke-width="2.2"/><path d="M12 11V8.5h8V11M7 17h18" style="stroke:var(--bg)" stroke-width="2.2" fill="none" stroke-linejoin="round"/></svg>gearbox</div>
+<button id="vb" data-a="voice" aria-label="Voice command"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></button></header>
+<input id="q" type="search" placeholder="Search" style="display:none">
+<main id="m"></main>
+<nav id="nv"><i id="ni"></i><button data-a="tab" data-v="home">Home</button><button data-a="tab" data-v="gear">Gear</button><button data-a="tab" data-v="kits">Kits</button><button data-a="tab" data-v="data">Backup</button></nav>
+<dialog id="d"><div id="dc"></div></dialog>
+<input id="rf" type="file" accept=".json,application/json" hidden>
+<script>
+(function(){
+var K="gear-locker-v2",S={c:[],i:[],k:[],s:[]},V="home",GS="items",O=null,Q="",SF="",KM="pack",photo="";
+var ST={ok:"Available",lent:"Lent out",repair:"In repair",missing:"Missing"},BL={yes:"Backed up",partly:"Partly",no:"Not backed up"};
+var $=function(i){return document.getElementById(i)};
+try{var r=JSON.parse(localStorage.getItem(K)||"null");if(r&&r.c&&r.i&&r.k)S=r}catch(e){}
+S.s=S.s||[];
+var LT="";
+function save(){try{localStorage.setItem(K,JSON.stringify(S));return true}catch(e){alert("Storage is full. Remove some photos.");return false}}
+function esc(s){var d=document.createElement("div");d.textContent=s==null?"":s;return d.innerHTML}
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,5)}
+function by(a,id){return a.filter(function(x){return x.id===id})[0]}
+function match(n){return !Q||n.toLowerCase().indexOf(Q.toLowerCase())>=0}
+function day(o){var d=new Date();d.setDate(d.getDate()+(o||0));return d.toISOString().slice(0,10)}
+function fd(d){return new Date(d+"T00:00").toLocaleDateString(undefined,{weekday:"short",day:"numeric",month:"short"})}
+function g(k,i,m){var v=(k[m||"ck"]||{})[i.id];return v===true?(+i.qty||1):(+v||0)}
+function fu(k,i,m){return g(k,i,m)>=(+i.qty||1)}
+function its(k){return k.ids.map(function(x){return by(S.i,x)}).filter(Boolean)}
+function prog(k,m){var l=its(k);return{n:l.length,d:l.filter(function(i){return fu(k,i,m)}).length}}
+function seg(k,m){return'<div class="seg">'+its(k).map(function(i){return'<i class="'+(fu(k,i,m)?'f':g(k,i,m)?'p':'')+'"></i>'}).join("")+'</div>'}
+function cname(i){var c=by(S.c,i.cid);return c?c.name:"No container"}
+function img(i,cls){return i.photo?'<img class="'+cls+'" src="'+i.photo+'" alt="">':'<div class="'+cls+' ph">'+esc((i.name||"?").charAt(0).toUpperCase())+'</div>'}
+function tile(i,a){var bad=i.st&&i.st!=="ok";return'<div class="tile" data-a="'+a+'" data-id="'+i.id+'">'+img(i,"tp")+(bad?'<span class="chip '+i.st+'">'+ST[i.st]+'</span>':'')+'<div class="tn"><b>'+esc(i.name)+(i.qty>1?' ×'+i.qty:'')+'</b><span>'+esc(cname(i))+'</span></div></div>'}
+function okI(i){if(!match(i.name))return false;if(SF==="attn")return i.st&&i.st!=="ok";if(SF==="nocont")return!by(S.c,i.cid);if(SF==="svc")return i.due&&i.due<=day(7);return true}
+function slot(k,i,m){var f=fu(k,i,m),n=g(k,i,m),q=+i.qty||1;return'<div class="slot '+(f?'in':n?'half':'out')+(LT===i.id?' pop':'')+'" data-a="tick" data-id="'+i.id+'">'+(i.photo&&(f||n)?'<img src="'+i.photo+'" alt="">':'')+'<span class="sn">'+esc(i.name)+'</span>'+(q>1?'<span class="sq">'+n+'/'+q+'</span>':'')+'</div>'}
+function al(t,v,g2,f){return'<div class="al" data-a="jump" data-v="'+v+'" data-g="'+(g2||"")+'" data-f="'+(f||"")+'"><div>'+t+'</div></div>'}
+function home(){
+ var t=day(),nx=S.k.filter(function(k){return k.date&&k.date>=t}).sort(function(a,b){return a.date<b.date?-1:1})[0],h="";
+ if(nx){var p=prog(nx,"ck");h+='<section class="nx" data-a="openKit" data-id="'+nx.id+'"><div class="mu">Next shoot, '+fd(nx.date)+'</div><h2>'+esc(nx.name)+'</h2>'+seg(nx,"ck")+'<div class="mu">'+p.d+' of '+p.n+' packed</div></section>'}
+ else h+='<section class="nx"><div class="mu">No shoot planned</div><h2>Open a kit, set a date</h2><button class="btn y" data-a="tab" data-v="kits">Go to kits</button></section>';
+ var bad=S.s.filter(function(c){return c.backup!=="yes"}).length,att=S.i.filter(function(i){return i.st&&i.st!=="ok"}).length,nc=S.i.filter(function(i){return!by(S.c,i.cid)}).length,sv=S.i.filter(function(i){return i.due&&i.due<=day(7)}).length,a="";
+ if(bad)a+=al('<b>'+bad+' SD card'+(bad>1?'s':'')+'</b> not fully backed up',"gear","cards");
+ if(att)a+=al('<b>'+att+' item'+(att>1?'s':'')+'</b> lent out, in repair or missing',"gear","items","attn");
+ if(sv)a+=al('<b>'+sv+' item'+(sv>1?'s':'')+'</b> due for service',"gear","items","svc");
+ if(nc)a+=al('<b>'+nc+' item'+(nc>1?'s':'')+'</b> with no container',"gear","items","nocont");
+ h+='<div class="sec">Needs attention</div>'+(a||'<div class="ok">Nothing right now.</div>');
+ var pcs=S.i.reduce(function(x,i){return x+(+i.qty||1)},0);
+ h+='<div class="sec">In the box</div>'+[["Items",S.i.length],["Pieces",pcs],["Containers",S.c.length],["Kits",S.k.length],["SD cards",S.s.length]].map(function(r){return'<div class="mf">'+r[0]+'<i></i><b>'+r[1]+'</b></div>'}).join("");
+ return h}
+function gear(){
+ var h='<div class="sw">'+[["items","Items"],["cont","Containers"],["cards","SD cards"]].map(function(x){return'<button data-a="gs" data-v="'+x[0]+'" class="'+(GS===x[0]?"a":"")+'">'+x[1]+'</button>'}).join("")+'</div>';
+ if(GS==="items"){
+  if(SF)h+='<div class="note">Filtered. <span class="ln" data-a="clearf">Show all</span></div>';
+  var l=S.i.filter(okI);
+  h+=(l.length?'<div class="grid">'+l.map(function(i){return tile(i,"editItem")}).join("")+'</div>':'<div class="empty">'+(S.i.length?"No matches.":"Your gear list is empty. Add your first item.")+'</div>')+'<button class="btn y" data-a="newItem">Add item</button><button class="btn g" data-a="quick">Quick add many</button>';
+ }else if(GS==="cont"){
+  if(O&&by(S.c,O)){var c=by(S.c,O),l2=S.i.filter(function(i){return i.cid===O&&match(i.name)});
+   h+='<button class="bk" data-a="back">Back</button><h2>'+esc(c.name)+'</h2>'+(l2.length?'<div class="grid">'+l2.map(function(i){return tile(i,"editItem")}).join("")+'</div>':'<div class="empty">Nothing in here yet.</div>')+'<button class="btn g" data-a="delCont">Delete container</button>';
+  }else{O=null;
+   h+=(S.c.filter(function(c){return match(c.name)}).map(function(c){var l3=S.i.filter(function(i){return i.cid===c.id});return'<div class="rowc" data-a="openCont" data-id="'+c.id+'"><div class="strip">'+(l3.slice(0,4).map(function(i){return i.photo?'<img src="'+i.photo+'" alt="">':'<div></div>'}).join("")||'<div></div>')+'</div><div class="t"><b>'+esc(c.name)+'</b><span class="mu">'+l3.length+' items</span></div></div>'}).join("")||'<div class="empty">No containers yet. Add your bags, cases and boxes.</div>')+'<button class="btn y" data-a="newCont">New container</button>';}
+ }else{
+  var bd=S.s.filter(function(c){return c.backup!=="yes"}).length;
+  h+=(bd?'<div class="warn"><b>'+bd+' of '+S.s.length+' cards not fully backed up.</b></div>':'')+
+  (S.s.filter(function(c){return match(c.name)}).length?'<div class="grid">'+S.s.filter(function(c){return match(c.name)}).map(function(c){return'<div class="tile" data-a="editCard" data-id="'+c.id+'">'+img(c,"tp")+'<span class="chip '+c.backup+'">'+BL[c.backup]+'</span><div class="tn"><b>'+esc(c.name)+'</b><span>'+esc(c.contents||"No notes yet")+'</span></div></div>'}).join("")+'</div>':'<div class="empty">No SD cards yet. Add each card with a photo and what is on it.</div>')+'<button class="btn y" data-a="newCard">Add SD card</button>';}
+ return h}
+function kitsV(){
+ var k=O&&by(S.k,O);
+ if(k){var m=KM==="pack"?"ck":"rt",l=its(k),p=prog(k,m),ms=l.filter(function(i){return!fu(k,i,m)});
+  var h='<button class="bk" data-a="back">Back</button><h2>'+esc(k.name)+'</h2><div class="mu">'+(k.date?fd(k.date):"No shoot date")+'</div>'+
+  '<div class="sw"><button data-a="km" data-v="pack" class="'+(KM==="pack"?"a":"")+'">Pack</button><button data-a="km" data-v="ret" class="'+(KM==="ret"?"a":"")+'">Return check</button></div>'+
+  '<div class="case">'+(l.filter(function(i){return match(i.name)}).map(function(i){return slot(k,i,m)}).join("")||'<div class="mu" style="grid-column:1/-1;padding:16px">Empty case. Choose items below.</div>')+'</div>'+
+  '<div class="mu">'+p.d+' of '+p.n+(KM==="pack"?' packed':' back')+'</div>';
+  if(l.length&&ms.length)h+='<div class="warn"><b>'+(KM==="pack"?"Still missing":"Not back yet")+' ('+ms.length+'):</b> '+ms.map(function(i){return esc(i.name)+(g(k,i,m)?" ("+g(k,i,m)+" of "+i.qty+")":"")}).join(", ")+'</div>';
+  else if(l.length)h+='<div class="warn"><b>'+(KM==="pack"?"All packed. Ready to go.":"Everything is back in the box.")+'</b></div>';
+  return h+'<button class="btn y" data-a="pick">Choose items</button><button class="btn g" data-a="setDate">Set shoot date</button><button class="btn g" data-a="reset">Uncheck all</button><button class="btn g" data-a="delKit">Delete kit</button>'}
+ O=null;
+ return(S.k.filter(function(k){return match(k.name)}).map(function(k){var p=prog(k,"ck");return'<div class="rowc" data-a="openKit" data-id="'+k.id+'"><div class="t"><b>'+esc(k.name)+'</b><span class="mu">'+(k.date?fd(k.date)+", ":"")+p.d+' of '+p.n+' packed</span>'+seg(k,"ck")+'</div></div>'}).join("")||'<div class="empty">No kits yet. A kit is a reusable shoot list, like “Wedding kit”.</div>')+'<button class="btn y" data-a="newKit">New kit</button>'}
+function dataV(){var hk=!!apiKey();return'<h2>Backup</h2><div class="mu">Gearbox keeps your data in this browser. Save a backup file now and then.</div><button class="btn y" data-a="pdf">Download PDF checklist</button><button class="btn g" data-a="backup">Save backup file</button><button class="btn g" data-a="restore">Restore from backup</button><div class="sec">Smart voice</div><div class="mu">Paste an Anthropic API key so voice understands full sentences. It is saved only on this phone. Set a spend limit in the Anthropic Console.</div>'+(hk?'<div class="note" style="margin-top:10px">Key saved on this phone.</div><button class="btn g" data-a="clearKey">Remove key</button>':'<input id="k_i" class="kin" type="password" autocomplete="off" placeholder="sk-ant-…"><button class="btn g" data-a="saveKey">Save key</button>')}
+function render(){
+ var ix=0;Array.prototype.forEach.call($("nv").querySelectorAll("button"),function(b,n){var on=b.dataset.v===V;b.className=on?"a":"";if(on)ix=n});$("nv").style.setProperty("--i",ix);
+ $("q").style.display=(V==="gear"||V==="kits")?"":"none";
+ $("m").innerHTML=V==="home"?home():V==="gear"?gear():V==="kits"?kitsV():dataV()}
+function dlg(h){$("dc").innerHTML=h;if(!$("d").open)$("d").showModal()}
+function phWire(){var el=$("f_f");el.onchange=function(){var f=this.files[0];if(!f)return;var rd=new FileReader();rd.onload=function(){var im=new Image();im.onload=function(){var s=Math.min(1,640/Math.max(im.width,im.height)),c=document.createElement("canvas");c.width=im.width*s;c.height=im.height*s;c.getContext("2d").drawImage(im,0,0,c.width,c.height);photo=c.toDataURL("image/jpeg",.65);$("pv").src=photo;$("pv").style.display="block"};im.src=rd.result};rd.readAsDataURL(f)}}
+function copts(sel){return'<option value="">No container</option>'+S.c.map(function(c){return'<option value="'+c.id+'"'+(sel===c.id?" selected":"")+'>'+esc(c.name)+'</option>'}).join("")}
+function pvh(){return'<img id="pv" alt="" src="'+photo+'" style="display:'+(photo?"block":"none")+'">'}
+function itemDlg(it){photo=it?it.photo||"":"";var st=it&&it.st||"ok";
+ dlg('<h3>'+(it?"Edit item":"Add item")+'</h3><label>Name</label><input id="f_n" value="'+esc(it?it.name:"")+'" placeholder="e.g. Sony A7 III"><div class="r2"><div><label>Quantity</label><input id="f_q" type="number" min="1" inputmode="numeric" value="'+(it?it.qty:1)+'"></div><div><label>Status</label><select id="f_s">'+Object.keys(ST).map(function(k){return'<option value="'+k+'"'+(st===k?" selected":"")+'>'+ST[k]+'</option>'}).join("")+'</select></div></div><label>Kept in</label><select id="f_c">'+copts(it&&it.cid)+'</select><label>With whom, if lent out</label><input id="f_w" value="'+esc(it&&it.who||"")+'"><div class="r2"><div><label>Last serviced</label><input id="f_l" type="date" value="'+(it&&it.last||"")+'"></div><div><label>Service due</label><input id="f_d" type="date" value="'+(it&&it.due||"")+'"></div></div><label>Photo</label><input id="f_f" type="file" accept="image/*">'+pvh()+'<button class="btn y" data-a="saveItem" data-id="'+(it?it.id:"")+'">Save</button>'+(it?'<button class="btn g" data-a="delItem" data-id="'+it.id+'">Delete</button>':'')+'<button class="btn g" data-a="close">Cancel</button>');phWire()}
+function cardDlg(c){photo=c?c.photo||"":"";
+ dlg('<h3>'+(c?"Edit SD card":"Add SD card")+'</h3><label>Name</label><input id="f_n" value="'+esc(c?c.name:"")+'" placeholder="e.g. Sony 128GB, card 2"><label>What is on it</label><textarea id="f_t" rows="3" placeholder="e.g. Wedding, 12 Nov, raw files">'+esc(c?c.contents:"")+'</textarea><label>Backed up?</label><select id="f_b">'+[["no","Not backed up"],["partly","Partly"],["yes","Backed up"]].map(function(o){return'<option value="'+o[0]+'"'+((c?c.backup:"no")===o[0]?" selected":"")+'>'+o[1]+'</option>'}).join("")+'</select><label>Backed up where</label><input id="f_w" value="'+esc(c?c.where:"")+'" placeholder="e.g. Laptop, external drive"><label>Photo</label><input id="f_f" type="file" accept="image/*">'+pvh()+'<button class="btn y" data-a="saveCard" data-id="'+(c?c.id:"")+'">Save</button>'+(c?'<button class="btn g" data-a="delCard" data-id="'+c.id+'">Delete</button>':'')+'<button class="btn g" data-a="close">Cancel</button>');phWire()}
+function nameDlg(t,a){dlg('<h3>'+t+'</h3><label>Name</label><input id="f_n"><button class="btn y" data-a="'+a+'">Save</button><button class="btn g" data-a="close">Cancel</button>');$("f_n").focus()}
+function dl(name,data){try{var b=new Blob([data],{type:/\.pdf$/.test(name)?"application/pdf":"application/json"}),u=URL.createObjectURL(b),a=document.createElement("a");a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u)},4000)}catch(e){alert("Couldn’t save the file.")}}
+function pdf(){
+ var J=window.jspdf;if(!J){alert("PDF tool didn’t load. Check your connection.");return}
+ var D=new J.jsPDF(),y=20;
+ function ln(t,sz,b){if(y>280){D.addPage();y=20}D.setFontSize(sz);D.setFont("helvetica",b?"bold":"normal");D.text(String(t),14,y);y+=sz*.55+2}
+ ln("Gearbox",20,1);ln(new Date().toLocaleDateString(),10);y+=4;
+ ln("Inventory ("+S.i.length+" items)",14,1);
+ S.c.concat([{id:"",name:"No container"}]).forEach(function(c){var l=S.i.filter(function(i){return c.id?i.cid===c.id:!by(S.c,i.cid)});if(!l.length)return;ln(c.name,11,1);l.forEach(function(i){ln("  - "+i.name+(i.qty>1?" x"+i.qty:"")+(i.st&&i.st!=="ok"?" ["+ST[i.st]+(i.who?": "+i.who:"")+"]":""),10)})});
+ y+=4;
+ S.k.forEach(function(k){var p=prog(k,"ck"),q=prog(k,"rt");y+=2;ln("Kit: "+k.name+(k.date?" ("+k.date+")":"")+" - "+p.d+" of "+p.n+" packed",13,1);
+  its(k).forEach(function(i){ln("  ["+(fu(k,i,"ck")?"x":" ")+"] "+i.name+(i.qty>1?" x"+i.qty+" ("+g(k,i,"ck")+" packed)":""),10)});
+  if(p.n>p.d)ln("  Missing: "+(p.n-p.d),10,1);if(q.d)ln("  Returned: "+q.d+" of "+q.n,10)});
+ if(S.s.length){y+=4;ln("SD cards",14,1);S.s.forEach(function(c){ln("  "+c.name+": "+BL[c.backup].toLowerCase()+(c.where?" ("+c.where+")":""),10);if(c.contents)ln("     "+c.contents,9)})}
+ dl("gearbox-checklist.pdf",D.output("arraybuffer"))}
+function vs(m){var e=$("v_s");if(e)e.textContent=m}
+var DICT=null,LIS=false,VP=null,WR=null,BK={yes:"backed up",partly:"partly backed up",no:"not backed up"};
+function lc(a,n){n=String(n||"").trim().toLowerCase();return a.filter(function(x){return x.name.toLowerCase()===n})[0]}
+function ens(a,n,o){var f=lc(a,n);if(!f){f=o;f.name=String(n).trim();a.push(f)}return f}
+function cap(x){x=x.trim();return x.charAt(0).toUpperCase()+x.slice(1)}
+function parts(t){return t.split(/\s*(?:,|\band\b)\s*/i).filter(Boolean).map(function(x){return x.replace(/^(?:an?|the)\s+/i,"")})}
+function mkI(n,q,cid){return{id:uid(),name:String(n).trim(),qty:Math.max(1,parseInt(q)||1),cid:cid||"",photo:"",st:"ok"}}
+function offline(t){var out=[];
+ t.split(/[.;\n]+/).forEach(function(s){s=s.trim().replace(/^please\s+/i,"");if(!s)return;var m;
+  if(m=s.match(/^(?:create|new|make)\s+(?:a\s+)?(kit|container|bag|case|box)\s+(?:called\s+|named\s+)?(.+)$/i)){out.push({op:/kit/i.test(m[1])?"addKit":"addContainer",name:cap(m[2])});return}
+  if(m=s.match(/^(?:add|new)\s+(?:an?\s+)?sd\s*card\s+(?:called\s+|named\s+)?(.+)$/i)){out.push({op:"addCard",name:cap(m[1]),backup:"no"});return}
+  if(m=s.match(/^mark\s+(.+?)\s+(?:as\s+)?(not backed up|backed up)$/i)){out.push({op:"setBackup",card:m[1],backup:/^not/i.test(m[2])?"no":"yes"});return}
+  if(m=s.match(/^(?:add|put)\s+(.+?)\s+(?:to|in|into)\s+(?:the\s+)?(.+)$/i)){var tg=m[2].replace(/\s+kit$/i,"").trim(),isK=/\skit$/i.test(m[2])||lc(S.k,tg);
+   if(isK){out.push({op:"addToKit",kit:tg,items:parts(m[1]).map(function(x){return cap(x.replace(/^\d+\s*x?\s+/i,""))})});return}
+   parts(m[1]).forEach(function(x){var q=x.match(/^(\d+)\s*x?\s+(.+)$/i)||(x.match(/^(.+?)\s+x\s*(\d+)$/i)||[]).map(function(v,i,a){return i===1?a[2]:i===2?a[1]:v});out.push({op:"addItem",name:cap(q&&q[2]?q[2]:x),qty:q&&q[1]?+q[1]:1,container:cap(tg)})});return}
+  if(m=s.match(/^add\s+(.+)$/i)){parts(m[1]).forEach(function(x){var q=x.match(/^(\d+)\s*x?\s+(.+)$/i);out.push({op:"addItem",name:cap(q?q[2]:x),qty:q?+q[1]:1})})}
+ });return out}
+function apiKey(){try{return localStorage.getItem("gearbox-key")||""}catch(e){return""}}
+function ask(t){
+ var ctx={containers:S.c.map(function(x){return x.name}),kits:S.k.map(function(x){return x.name}),cards:S.s.map(function(x){return x.name}),items:S.i.map(function(x){return x.name})},key=apiKey();
+ var P='You convert spoken commands for a camera gear inventory app into JSON. Reply with only a JSON array of actions, each one of: {"op":"addItem","name":"","qty":1,"container":"optional"}, {"op":"addContainer","name":""}, {"op":"addKit","name":""}, {"op":"addToKit","kit":"","items":[""]}, {"op":"addCard","name":"","contents":"optional","backup":"yes|no|partly"}, {"op":"setBackup","card":"","backup":"yes|no|partly","where":"optional"}. Reuse existing names exactly when the speaker means them. Existing data: '+JSON.stringify(ctx)+'\nCommand: '+t;
+ var p=key?fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"content-type":"application/json","x-api-key":key,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},body:JSON.stringify({model:"claude-haiku-5-5",max_tokens:1000,messages:[{role:"user",content:P}]})}).then(function(r){if(!r.ok)throw r.status;return r.json()}).then(function(d){var tx=(d.content||[]).map(function(x){return x.text||""}).join("").replace(/```json|```/g,"").trim(),a=JSON.parse(tx);if(!Array.isArray(a))throw 0;return{acts:a,how:""}}):Promise.reject(0);
+ return p.catch(function(){var a=offline(t);if(!a.length)throw 1;return{acts:a,how:key?"The AI request failed, so I used basic commands.":"No API key set, so I used basic commands."}})}
+function desc(a){switch(a.op){
+ case"addItem":return"Add "+(a.qty>1?a.qty+" × ":"")+a.name+(a.container?" to "+a.container:"");
+ case"addContainer":return"New container: "+a.name;case"addKit":return"New kit: "+a.name;
+ case"addToKit":return"Add "+(a.items||[]).join(", ")+" to kit "+a.kit;
+ case"addCard":return"New SD card: "+a.name+" ("+(BK[a.backup]||"not backed up")+")";
+ case"setBackup":return"Mark "+a.card+" "+(BK[a.backup]||"not backed up")}return""}
+var A={
+ tab:function(e){V=e.dataset.v;O=null;Q="";SF="";$("q").value="";render()},
+ gs:function(e){GS=e.dataset.v;O=null;SF="";render()},
+ jump:function(e){V=e.dataset.v;GS=e.dataset.g||GS;SF=e.dataset.f||"";O=null;Q="";$("q").value="";render()},
+ clearf:function(){SF="";render()},
+ back:function(){O=null;render()},
+ openKit:function(e){V="kits";O=e.dataset.id;KM="pack";render()},
+ openCont:function(e){O=e.dataset.id;render()},
+ km:function(e){KM=e.dataset.v;render()},
+ newKit:function(){nameDlg("New kit","addKit")},newCont:function(){nameDlg("New container","addCont")},newItem:function(){itemDlg(null)},
+ addKit:function(){var n=$("f_n").value.trim();if(!n)return;S.k.push({id:uid(),name:n,ids:[],ck:{},rt:{},date:""});save();$("d").close();render()},
+ addCont:function(){var n=$("f_n").value.trim();if(!n)return;S.c.push({id:uid(),name:n});save();$("d").close();render()},
+ quick:function(){dlg('<h3>Quick add</h3><div class="mu">One item per line. Add “x4” for a quantity, like Batteries x4. Add photos later.</div><label>Kept in</label><select id="f_c">'+copts("")+'</select><label>Items</label><textarea id="f_t" rows="8"></textarea><button class="btn y" data-a="saveQuick">Add all</button><button class="btn g" data-a="close">Cancel</button>');$("f_t").focus()},
+ saveQuick:function(){var add=[];$("f_t").value.split("\n").forEach(function(l){l=l.trim();if(!l)return;var m=l.match(/^(.*?)\s+[x×]\s*(\d+)$/i);add.push(mkI(m&&m[1]?m[1]:l,m&&m[1]?m[2]:1,$("f_c").value))});if(!add.length)return;var prev=S.i.slice();S.i=add.concat(S.i);if(save()){$("d").close();render()}else S.i=prev},
+ grp:function(e){var ins=$("dc").querySelectorAll('input[data-c="'+e.dataset.id+'"]'),all=Array.prototype.every.call(ins,function(x){return x.checked});Array.prototype.forEach.call(ins,function(x){x.checked=!all})},
+ editItem:function(e){itemDlg(by(S.i,e.dataset.id))},
+ saveItem:function(e){var n=$("f_n").value.trim();if(!n){$("f_n").focus();return}var id=e.dataset.id,o={id:id||uid(),name:n,qty:Math.max(1,parseInt($("f_q").value)||1),cid:$("f_c").value,photo:photo,st:$("f_s").value,who:$("f_w").value.trim(),last:$("f_l").value,due:$("f_d").value},prev=S.i.slice();
+  if(id)S.i=S.i.map(function(i){return i.id===id?o:i});else S.i.unshift(o);
+  if(save()){$("d").close();render()}else S.i=prev},
+ delItem:function(e){if(!confirm("Delete this item?"))return;var id=e.dataset.id;S.i=S.i.filter(function(i){return i.id!==id});S.k.forEach(function(k){k.ids=k.ids.filter(function(x){return x!==id})});save();$("d").close();render()},
+ delCont:function(){if(!confirm("Delete this container? Its items stay, with no container."))return;S.i.forEach(function(i){if(i.cid===O)i.cid=""});S.c=S.c.filter(function(c){return c.id!==O});O=null;save();render()},
+ delKit:function(){if(!confirm("Delete this kit?"))return;S.k=S.k.filter(function(k){return k.id!==O});O=null;save();render()},
+ tick:function(e){var k=by(S.k,O),i=by(S.i,e.dataset.id),m=KM==="pack"?"ck":"rt",q=+i.qty||1;k[m]=k[m]||{};if(q>1){var v=g(k,i,m)+1;k[m][i.id]=v>q?0:v}else k[m][i.id]=!fu(k,i,m);LT=i.id;save();render();LT=""},
+ reset:function(){var k=by(S.k,O);k[KM==="pack"?"ck":"rt"]={};save();render()},
+ setDate:function(){var k=by(S.k,O);dlg('<h3>Shoot date</h3><label>Date</label><input id="f_d" type="date" value="'+(k.date||"")+'"><button class="btn y" data-a="saveDate">Save</button><button class="btn g" data-a="close">Cancel</button>')},
+ saveDate:function(){by(S.k,O).date=$("f_d").value;save();$("d").close();render()},
+ pick:function(){var k=by(S.k,O);if(!S.i.length){alert("Add some items first.");return}dlg('<h3>Items in this kit</h3><div style="max-height:52vh;overflow:auto">'+S.c.concat([{id:"",name:"No container"}]).map(function(c){var l=S.i.filter(function(i){return c.id?i.cid===c.id:!by(S.c,i.cid)});if(!l.length)return"";return'<div class="gh"><span style="padding-left:0;text-decoration:none">'+esc(c.name)+'</span><span data-a="grp" data-id="'+c.id+'">Select all</span></div>'+l.map(function(i){return'<label class="pk"><input type="checkbox" data-c="'+c.id+'" value="'+i.id+'"'+(k.ids.indexOf(i.id)>=0?" checked":"")+'>'+esc(i.name)+(i.qty>1?" ×"+i.qty:"")+'</label>'}).join("")}).join("")+'</div><button class="btn y" data-a="savePick">Save</button><button class="btn g" data-a="close">Cancel</button>')},
+ savePick:function(){var k=by(S.k,O),ids=[];Array.prototype.forEach.call($("dc").querySelectorAll("input:checked"),function(c){ids.push(c.value)});k.ids=ids;["ck","rt"].forEach(function(m){k[m]=k[m]||{};Object.keys(k[m]).forEach(function(x){if(ids.indexOf(x)<0)delete k[m][x]})});save();$("d").close();render()},
+ newCard:function(){cardDlg(null)},editCard:function(e){cardDlg(by(S.s,e.dataset.id))},
+ saveCard:function(e){var n=$("f_n").value.trim();if(!n){$("f_n").focus();return}var id=e.dataset.id,o={id:id||uid(),name:n,contents:$("f_t").value.trim(),backup:$("f_b").value,where:$("f_w").value.trim(),photo:photo},prev=S.s.slice();
+  if(id)S.s=S.s.map(function(c){return c.id===id?o:c});else S.s.unshift(o);
+  if(save()){$("d").close();render()}else S.s=prev},
+ delCard:function(e){if(!confirm("Delete this card?"))return;var id=e.dataset.id;S.s=S.s.filter(function(c){return c.id!==id});save();$("d").close();render()},
+ voice:function(){VP=null;dlg('<h3>Voice command</h3><div class="mu">Say what to add or change. Example: add 3 batteries to the black bag.</div><textarea id="v_t" rows="4" placeholder="Speak or type"></textarea><div class="vr"><button class="btn g" id="v_m" data-a="mic">Speak</button><button class="btn y" data-a="understand">Understand</button></div><div class="mu" id="v_s"></div><div id="v_p"></div><button class="btn g" data-a="close">Close</button>')},
+ mic:function(){var KB="Tap the box and use your keyboard mic key instead.";
+  if(DICT){if(LIS)DICT.stop();else DICT.start().catch(function(){vs("Mic was blocked. "+KB)});return}
+  var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR){vs("Built-in voice isn’t available here. "+KB);$("v_t").focus();return}
+  if(WR){WR.stop();return}
+  try{WR=new SR();WR.lang="en-IN";WR.interimResults=false;
+   WR.onresult=function(e){var t=$("v_t");t.value=(t.value+" "+e.results[0][0].transcript).trim()};
+   WR.onerror=function(e){vs("Mic blocked here ("+e.error+"). "+KB);$("v_t").focus()};
+   WR.onend=function(){WR=null;var b=$("v_m");if(b)b.textContent="Speak"};
+   WR.start();$("v_m").textContent="Stop";vs("Listening…")}catch(x){WR=null;vs("Mic unavailable here. "+KB);$("v_t").focus()}},
+ understand:function(){var t=$("v_t").value.trim();if(!t)return;VP=null;$("v_p").innerHTML='<div class="mu">Reading…</div>';
+  ask(t).then(function(r){VP=r.acts.filter(function(a){return a&&desc(a)});if(!VP.length)throw 1;
+   $("v_p").innerHTML=(r.how?'<div class="mu">'+esc(r.how)+'</div>':'')+'<div class="warn">'+VP.map(function(a){return'<div>'+esc(desc(a))+'</div>'}).join("")+'</div><button class="btn y" data-a="go">Go</button>'})
+  .catch(function(){$("v_p").innerHTML='<div class="warn">Could not understand that. Try: add 2 batteries to the black bag.</div>'})},
+ go:function(){if(!VP)return;var prev=JSON.stringify(S);
+  VP.forEach(function(a){var c,k,i;
+   if(a.op==="addContainer")ens(S.c,a.name,{id:uid()});
+   else if(a.op==="addKit")ens(S.k,a.name,{id:uid(),ids:[],ck:{},rt:{},date:""});
+   else if(a.op==="addItem"){c=a.container?ens(S.c,a.container,{id:uid()}):null;S.i.unshift(mkI(a.name,a.qty,c?c.id:""))}
+   else if(a.op==="addToKit"){k=ens(S.k,a.kit,{id:uid(),ids:[],ck:{},rt:{},date:""});(a.items||[]).forEach(function(n){i=lc(S.i,n);if(!i){i=mkI(n,1,"");S.i.unshift(i)}if(k.ids.indexOf(i.id)<0)k.ids.push(i.id)})}
+   else if(a.op==="addCard")S.s.unshift({id:uid(),name:String(a.name).trim(),contents:a.contents||"",backup:["yes","partly","no"].indexOf(a.backup)>=0?a.backup:"no",where:"",photo:""});
+   else if(a.op==="setBackup"){var sc=lc(S.s,a.card);if(sc){if(["yes","partly","no"].indexOf(a.backup)>=0)sc.backup=a.backup;if(a.where)sc.where=a.where}}});
+  if(save()){$("d").close();render()}else S=JSON.parse(prev)},
+ close:function(){$("d").close()},
+ saveKey:function(){var v=$("k_i").value.trim();if(!v)return;try{localStorage.setItem("gearbox-key",v)}catch(e){alert("Couldn’t save the key.");return}render()},
+ clearKey:function(){try{localStorage.removeItem("gearbox-key")}catch(e){}render()},
+ pdf:pdf,
+ backup:function(){dl("gearbox-backup.json",JSON.stringify(S))},
+ restore:function(){$("rf").value="";$("rf").click()}
+};
+function anim(){var m=$("m");m.classList.remove("enter");void m.offsetWidth;m.classList.add("enter")}
+["tab","gs","jump","back","openKit","openCont"].forEach(function(n){var f=A[n];A[n]=function(e){f(e);anim()}});
+document.body.onclick=function(e){var t=e.target.closest("[data-a]");if(t&&A[t.dataset.a])A[t.dataset.a](t)};
+$("q").oninput=function(){Q=this.value;render()};
+$("rf").onchange=function(){var f=this.files[0];if(!f)return;var rd=new FileReader();rd.onload=function(){try{var o=JSON.parse(rd.result);if(!o||!Array.isArray(o.c)||!Array.isArray(o.i)||!Array.isArray(o.k))throw 0;
+ if(!confirm("Replace everything with this backup?\n"+o.i.length+" items, "+o.c.length+" containers, "+o.k.length+" kits."))return;S=o;S.s=S.s||[];O=null;if(save())render()}catch(x){alert("That file isn’t a Gearbox backup.")}};rd.readAsText(f)};
+render();anim();
+(function(){try{var c=document.createElement("canvas");c.width=c.height=512;var x=c.getContext("2d");x.fillStyle="#16191d";x.fillRect(0,0,512,512);x.strokeStyle="#fff";x.lineWidth=30;x.lineJoin="round";x.lineCap="round";
+x.beginPath();x.roundRect?x.roundRect(110,190,292,200,40):x.rect(110,190,292,200);x.stroke();x.beginPath();x.moveTo(190,190);x.lineTo(190,140);x.lineTo(322,140);x.lineTo(322,190);x.moveTo(110,290);x.lineTo(402,290);x.stroke();
+var u=c.toDataURL("image/png"),a=document.createElement("link");a.rel="apple-touch-icon";a.href=u;document.head.appendChild(a);
+var man={name:"Gearbox",short_name:"Gearbox",display:"standalone",start_url:location.href.split("#")[0],background_color:"#eceef0",theme_color:"#eceef0",icons:[{src:u,sizes:"512x512",type:"image/png",purpose:"any"}]};
+var m=document.createElement("link");m.rel="manifest";m.href=URL.createObjectURL(new Blob([JSON.stringify(man)],{type:"application/manifest+json"}));document.head.appendChild(m)}catch(e){}})();
+})();
+</script></body></html>
